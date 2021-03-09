@@ -69,8 +69,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'moviesapp.db',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgresql',
+        'USER': 'joel',
+        'PASSWORD': '123123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
