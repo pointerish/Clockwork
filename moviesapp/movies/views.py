@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from .models import Movie
+from .encoders import ExtendedEncoder
 
 
 class MovieListView(ListView):
@@ -28,9 +29,10 @@ class MovieDetailView(DetailView):
         query = Movie.objects.get(pk=isbn)
         return JsonResponse(query, encoder=ExtendedEncoder, safe=False)
 
+
 class MovieCreateView(CreateView):
     """Create a new movie."""
-    
+
 
 class MovieUpdateView(UpdateView):
     """Update the requested movie."""

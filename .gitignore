@@ -11,10 +11,4 @@ __pycache__/
 *.pyc
 *$py.class
 *.cpython-37.pyc
-bin/
-lib64/
-lib/
-include/
-share/
-etc/
-man/
+env/
