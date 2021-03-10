@@ -21,6 +21,9 @@ DJANGO_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_api_key',
+    'rest_framework_swagger',
 
     # Useful template tags:
     # 'django.contrib.humanize',
@@ -51,14 +54,12 @@ MIGRATION_MODULES = {
 }
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
 }
 
-DEBUG = False
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 SECRET_KEY = 'CHANGEME'
 
