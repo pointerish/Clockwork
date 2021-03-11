@@ -25,7 +25,7 @@ class Movie(models.Model):
 
 class Review(models.Model):
     body = models.TextField(blank=False, null=False)
-    stars = models.PositiveSmallIntegerField()
+    stars = models.PositiveIntegerField()
     movie = models.ForeignKey(Movie, blank=False, null=False, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
