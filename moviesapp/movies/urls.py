@@ -13,6 +13,13 @@ urlpatterns = [
          view=views.MovieUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/',
          view=views.MovieDeleteView.as_view(), name='delete'),
+    path('reviews/<int:pk>/',
+         view=views.ReviewDetailView.as_view(), name='review-detail'),
+    path('reviews/create/', view=views.ReviewCreateView.as_view(), name='review-create'),
+    path('reviews/update/<int:pk>/',
+         view=views.ReviewUpdateView.as_view(), name='review-update'),
+    path('reviews/delete/<int:pk>/',
+         view=views.ReviewDeleteView.as_view(), name='review-delete'),
     path('search/',
          view=views.MovieSearchView.as_view(), name='search'),
 ]

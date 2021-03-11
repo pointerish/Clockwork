@@ -24,5 +24,3 @@ class MovieSearchSerializer(serializers.Serializer):
     genre = serializers.CharField(max_length=255)
     director = serializers.CharField(max_length=255)
     plot = serializers.CharField(max_length=255)
-    created_at = serializers.DateTimeField()
-    updated_at = serializers.DateTimeField()
