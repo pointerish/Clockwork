@@ -13,7 +13,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 from .models import Movie
 from .encoders import ExtendedEncoder
-from .serializers import MovieSerializer
+from .serializers import MovieSerializer, MovieSearchSerializer
 
 
 class MovieListView(APIView):
@@ -49,3 +49,11 @@ class MovieDeleteView(DestroyAPIView):
     """Delete the requested movie."""
     permission_classes = [HasAPIKey]
     queryset = Movie.objects.all()
+
+
+class MovieSearchView(APIView):
+    """Show the search result."""
+    permission_classes = [HasAPIKey]
+    def post(self, request):
+        query = Movie.objects.get(pk=pk)
+        return JsonResponse(query, encoder=ExtendedEncoder, safe=False)

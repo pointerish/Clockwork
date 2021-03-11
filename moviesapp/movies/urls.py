@@ -13,4 +13,6 @@ urlpatterns = [
          view=views.MovieUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/',
          view=views.MovieDeleteView.as_view(), name='delete'),
+    path('search/',
+         view=views.MovieSearchView.as_view(), name='search'),
 ]
