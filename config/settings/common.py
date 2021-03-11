@@ -21,6 +21,8 @@ DJANGO_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_api_key',
 
     # Useful template tags:
     # 'django.contrib.humanize',
@@ -50,6 +52,12 @@ MIGRATION_MODULES = {
     'sites': 'moviesapp.contrib.sites.migrations'
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+}
+
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 SECRET_KEY = 'CHANGEME'
@@ -69,8 +77,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'moviesapp.db',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'joel',
+        'PASSWORD': '123123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
