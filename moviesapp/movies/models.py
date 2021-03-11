@@ -20,7 +20,7 @@ class Movie(models.Model):
         return f'{self.title}'
 
     def get_absolute_url(self) -> str:
-        return reverse('Movies:detail', kwargs={'id': self.pk})
+        return reverse('movies:detail', kwargs={'id': self.pk})
 
 
 class Review(models.Model):
