@@ -18,7 +18,6 @@ from .serializers import MovieSerializer
 
 class MovieListView(APIView):
     """Show all movies."""
-    permission_classes = [HasAPIKey]
     def get(self, request):
         queryset = Movie.objects.all()
         queryset_json = serializers.serialize('json', queryset)

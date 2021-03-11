@@ -23,7 +23,6 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_api_key',
-    'rest_framework_swagger',
 
     # Useful template tags:
     # 'django.contrib.humanize',

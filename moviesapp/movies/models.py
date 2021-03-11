@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 class Movie(models.Model):
     title = models.CharField(_('Movie\'s title'), max_length=255)
     year = models.PositiveIntegerField(default=2019)
-    # Example: PG-13
     rated = models.CharField(max_length=64)
     released_on = models.DateField(_('Release Date'))
     genre = models.CharField(max_length=255)
@@ -20,8 +19,8 @@ class Movie(models.Model):
     def __str__(self) -> str:
         return f'{self.title}'
 
-    def get_absolute_url(self):
-        return reverse('movies:detail', kwargs={'id': self.pk})
+    def get_absolute_url(self) -> str:
+        return reverse('Movies:detail', kwargs={'id': self.pk})
 
 
 class User(models.Model):
