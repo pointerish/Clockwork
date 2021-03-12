@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
-"""Movies views."""
-
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.core import serializers
 
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework_api_key.permissions import HasAPIKey
-from django_filters.rest_framework import DjangoFilterBackend
-
+import django_filters.rest_framework
 
 from .models import Movie, Review
 from .encoders import ExtendedEncoder
 from .serializers import MovieSerializer, ReviewSerializer, MovieSearchSerializer
+
 
 
 class MovieListView(APIView):
@@ -87,9 +85,8 @@ class ReviewDeleteView(DestroyAPIView):
     queryset = Review.objects.all()
 
 
-class MovieSearchView(APIView):
+class MovieSearchView(ListAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSearchSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'year', 'rated',
-                        'released_on', 'genre', 'director']
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ("title", "year", "rated", "released_on", "genre", "director",)
