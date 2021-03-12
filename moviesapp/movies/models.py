@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Movie(models.Model):
-    title = models.CharField(_('Movie\'s title'), max_length=255)
+    title = models.CharField(_('Movie\'s title'), max_length=255, unique=True)
     year = models.PositiveIntegerField(default=2019)
     rated = models.CharField(max_length=64)
     released_on = models.DateField(_('Release Date'))

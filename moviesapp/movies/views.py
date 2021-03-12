@@ -14,9 +14,9 @@ from .encoders import ExtendedEncoder
 from .serializers import MovieSerializer, ReviewSerializer, MovieSearchSerializer
 
 
-
 class MovieListView(APIView):
     """Show all movies."""
+
     def get(self, request):
         queryset = Movie.objects.order_by('-created_at', 'review')
         queryset_json = serializers.serialize('json', queryset)
@@ -26,6 +26,7 @@ class MovieListView(APIView):
 class MovieDetailView(APIView):
     """Show the requested movie."""
     # permission_classes = [HasAPIKey]
+
     def get(self, request, pk):
         query = Movie.objects.get(pk=pk)
         return JsonResponse(query, encoder=ExtendedEncoder, safe=False)
@@ -34,7 +35,17 @@ class MovieDetailView(APIView):
 class MovieCreateView(CreateAPIView):
     """Create a new movie."""
     # permission_classes = [HasAPIKey]
-    serializer_class = MovieSerializer
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'message': 'Feed me movie data, please.'}, safe=False, status=200)
+
+    def post(self, request, *args, **kwargs):
+        serializer = MovieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message': f'{request.data["title"]} - The movie created successfully'}, safe=False, status=200)
+        errors = serializer.errors
+        return JsonResponse({'message': 'The creation has failed', 'error': errors}, safe=False, status=400)
 
 
 class MovieUpdateView(UpdateAPIView):
@@ -52,6 +63,7 @@ class MovieDeleteView(DestroyAPIView):
 
 class ReviewListView(APIView):
     """Show all reviews."""
+
     def get(self, request):
         queryset = Review.objects.all()
         queryset_json = serializers.serialize('json', queryset)
@@ -61,6 +73,7 @@ class ReviewListView(APIView):
 class ReviewDetailView(APIView):
     """Show the requested review."""
     # permission_classes = [HasAPIKey]
+
     def get(self, request, pk):
         query = Review.objects.get(pk=pk)
         return JsonResponse(query, encoder=ExtendedEncoder, safe=False)
@@ -89,4 +102,5 @@ class MovieSearchView(ListAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSearchSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ("title", "year", "rated", "released_on", "genre", "director",)
+    filter_fields = ("title", "year", "rated",
+                     "released_on", "genre", "director",)
