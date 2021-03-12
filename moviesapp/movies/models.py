@@ -23,6 +23,9 @@ class Movie(models.Model):
 
 
 class Review(models.Model):
+
+    ordering = ['-stars']
+
     body = models.TextField(blank=False, null=False)
     stars = models.PositiveIntegerField()
     movie = models.ForeignKey(Movie, blank=False, null=False, on_delete=models.CASCADE)

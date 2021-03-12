@@ -18,14 +18,14 @@ from .serializers import MovieSerializer, ReviewSerializer, MovieSearchSerialize
 class MovieListView(APIView):
     """Show all movies."""
     def get(self, request):
-        queryset = Movie.objects.all()
+        queryset = Movie.objects.order_by('-created_at', 'review')
         queryset_json = serializers.serialize('json', queryset)
         return HttpResponse(queryset_json, content_type='application/json')
 
 
 class MovieDetailView(APIView):
     """Show the requested movie."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     def get(self, request, pk):
         query = Movie.objects.get(pk=pk)
         return JsonResponse(query, encoder=ExtendedEncoder, safe=False)
@@ -33,20 +33,20 @@ class MovieDetailView(APIView):
 
 class MovieCreateView(CreateAPIView):
     """Create a new movie."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     serializer_class = MovieSerializer
 
 
 class MovieUpdateView(UpdateAPIView):
     """Update the requested movie."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
 
 class MovieDeleteView(DestroyAPIView):
     """Delete the requested movie."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     queryset = Movie.objects.all()
 
 
@@ -60,7 +60,7 @@ class ReviewListView(APIView):
 
 class ReviewDetailView(APIView):
     """Show the requested review."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     def get(self, request, pk):
         query = Review.objects.get(pk=pk)
         return JsonResponse(query, encoder=ExtendedEncoder, safe=False)
@@ -68,20 +68,20 @@ class ReviewDetailView(APIView):
 
 class ReviewCreateView(CreateAPIView):
     """Create a new review."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     serializer_class = ReviewSerializer
 
 
 class ReviewUpdateView(UpdateAPIView):
     """Update the requested review."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
 
 class ReviewDeleteView(DestroyAPIView):
     """Delete the requested review."""
-    permission_classes = [HasAPIKey]
+    # permission_classes = [HasAPIKey]
     queryset = Review.objects.all()
 
 
