@@ -4,6 +4,7 @@ from django.test import TestCase
 
 class TestMovieURLs(TestCase):
     """Test URL patterns for movies app."""
+    fixtures = ['movie.json']
 
     def test_urls(self):
         self.assertEqual(reverse('movies:index'), '/movies/')
