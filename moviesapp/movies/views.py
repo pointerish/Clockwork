@@ -45,7 +45,7 @@ class MovieCreateView(CreateAPIView):
             serializer.save()
             return JsonResponse({'message': f'{request.data["title"]} - The movie created successfully'}, safe=False, status=200)
         errors = serializer.errors
-        return JsonResponse({'message': 'The creation has failed', 'error': errors}, safe=False, status=400)
+        return JsonResponse({'message': 'The creation has failed', 'form': errors}, safe=False, status=400)
 
 
 class MovieUpdateView(UpdateAPIView):

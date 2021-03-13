@@ -19,7 +19,7 @@ class Movie(models.Model):
         return f'{self.title}'
 
     def get_absolute_url(self) -> str:
-        return reverse('movies:detail', kwargs={'id': self.pk})
+        return f'/movies/{self.pk}/'
 
 
 class Review(models.Model):
