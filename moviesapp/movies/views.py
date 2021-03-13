@@ -6,6 +6,7 @@ from django.core import serializers
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework_api_key.permissions import HasAPIKey
 import django_filters.rest_framework
 
@@ -18,7 +19,7 @@ class MovieListView(APIView):
     """Show all movies."""
 
     def get(self, request):
-        queryset = Movie.objects.order_by('-created_at', 'review')
+        queryset = Movie.objects.order_by('-created_at', 'reviews')
         queryset_json = serializers.serialize('json', queryset)
         return HttpResponse(queryset_json, content_type='application/json')
 
@@ -43,26 +44,38 @@ class MovieCreateView(CreateAPIView):
         serializer = MovieSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({'message': f'{request.data["title"]} - The movie created successfully'}, safe=False, status=200)
-        errors = serializer.errors
-        return JsonResponse({'message': 'The creation has failed', 'form': errors}, safe=False, status=400)
+            return JsonResponse({'message': f'{request.data["title"]} - The movie created successfully'},
+                                 safe=False, status=200)
+        return JsonResponse({'message': 'The creation has failed', 'form': serializer.errors}, safe=False, status=400)
 
 
-class MovieUpdateView(UpdateAPIView):
+class MovieUpdateView(UpdateAPIView, UpdateModelMixin):
     """Update the requested movie."""
     # permission_classes = [HasAPIKey]
+
+    def put(self, request, *args, **kwargs):
+        serializer = MovieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message': 'The movie updated successfully', 'form': {request.data}}, safe=False, status=200)
+        return JsonResponse({'message': 'The update has failed', 'form': serializer.errors}, safe=False, status=400)
+
+    def post(self, request, *args, **kwargs):
+        return self.put(request, *args, **kwargs)
+    
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
 
 class MovieDeleteView(DestroyAPIView):
     """Delete the requested movie."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
     queryset = Movie.objects.all()
 
 
 class ReviewListView(APIView):
     """Show all reviews."""
+    # permission_classes = [HasAPIKey]
 
     def get(self, request):
         queryset = Review.objects.all()
@@ -72,7 +85,7 @@ class ReviewListView(APIView):
 
 class ReviewDetailView(APIView):
     """Show the requested review."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     def get(self, request, pk):
         query = Review.objects.get(pk=pk)
@@ -87,18 +100,21 @@ class ReviewCreateView(CreateAPIView):
 
 class ReviewUpdateView(UpdateAPIView):
     """Update the requested review."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
 
 class ReviewDeleteView(DestroyAPIView):
     """Delete the requested review."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
     queryset = Review.objects.all()
 
 
 class MovieSearchView(ListAPIView):
+
+    # permission_classes = [HasAPIKey]
+
     queryset = Movie.objects.all()
     serializer_class = MovieSearchSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)

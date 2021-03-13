@@ -4,7 +4,7 @@ from moviesapp.movies.models import Movie
 
 
 class TestMovieViews(TestCase):
-
+    
     def setUp(self):
         Movie.objects.create(
             pk='8',
