@@ -13,14 +13,14 @@ It supports X-Api-Key as means of authorization. Each key must be provided by th
 ## Database ERD
 <br/>
 <p align="center">
-<img src="./docs/erd.png" width="500"/>
+<img src="./docs/erd.png" width="650"/>
 </p>
 <br/>
 
 ## Architecture
 <br/>
 <p align="center">
-<img src="./docs/architecture.png" align="" width="500"/>
+<img src="./docs/architecture.png" align="" width="650"/>
 </p>
 
 ## Live Demo
