@@ -26,7 +26,7 @@ class MovieListView(APIView):
 
 class MovieDetailView(APIView):
     """Show the requested movie."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     def get(self, request, pk):
         query = Movie.objects.get(pk=pk)
@@ -35,7 +35,7 @@ class MovieDetailView(APIView):
 
 class MovieCreateView(CreateAPIView):
     """Create a new movie."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({'message': 'Feed me movie data, please.'}, safe=False, status=200)
@@ -51,7 +51,7 @@ class MovieCreateView(CreateAPIView):
 
 class MovieUpdateView(UpdateAPIView, UpdateModelMixin):
     """Update the requested movie."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     def put(self, request, *args, **kwargs):
         serializer = MovieSerializer(data=request.data)
@@ -75,7 +75,7 @@ class MovieDeleteView(DestroyAPIView):
 
 class ReviewListView(APIView):
     """Show all reviews."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     def get(self, request):
         queryset = Review.objects.all()
@@ -94,7 +94,7 @@ class ReviewDetailView(APIView):
 
 class ReviewCreateView(CreateAPIView):
     """Create a new review."""
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
     serializer_class = ReviewSerializer
 
 
@@ -113,7 +113,7 @@ class ReviewDeleteView(DestroyAPIView):
 
 class MovieSearchView(ListAPIView):
 
-    # permission_classes = [HasAPIKey]
+    permission_classes = [HasAPIKey]
 
     queryset = Movie.objects.all()
     serializer_class = MovieSearchSerializer
