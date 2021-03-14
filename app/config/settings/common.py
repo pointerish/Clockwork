@@ -59,9 +59,17 @@ REST_FRAMEWORK = {
 }
 
 API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
-DEBUG = True
-ALLOWED_HOSTS = ['*']
-SECRET_KEY = 'CHANGEME'
+
+
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+
+
+ALLOWED_HOSTS = []
+ALLOWED_HOST_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOST_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOST_ENV.split(','))
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'CHANGEME')
 
 FIXTURE_DIRS = (
     os.path.join(APPS_DIR, 'fixtures/'),
@@ -82,7 +90,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'joel',
         'PASSWORD': '123123',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -120,18 +128,16 @@ TEMPLATES = [
     },
 ]
 
-STATIC_ROOT = os.path.join(ROOT_DIR, 'staticfiles/')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(APPS_DIR, 'static/'),
-)
+STATIC_ROOT = '/vol/web/static'
+STATIC_URL = '/static/static/'
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-MEDIA_ROOT = os.path.join(APPS_DIR, 'media/')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = '/vol/web/media/'
+MEDIA_URL = '/static/media/'
 
 ROOT_URLCONF = 'config.urls'
 

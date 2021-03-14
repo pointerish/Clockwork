@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.7'
 
 services:
   db:
@@ -12,17 +12,16 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-
-  web:
-    build: .
-    command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
+      - "5432:5432" 
+  app:
+    build:
+      context: .
     ports:
       - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment: 
+      - DEBUG=1
     depends_on:
       - db
- 
-volumes:
-  db-data:
