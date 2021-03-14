@@ -13,4 +13,3 @@ __pycache__/
 *.cpython-37.pyc
 env/
 init.sql
-docker-compose-deploy.yml

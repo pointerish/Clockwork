@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: joel
+      POSTGRES_PASSWORD: 123123
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"    
+  app:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - static_data:/vol/web
+    environment:
+      - SECRET_KEY=samplesecret1!
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+    depends_on:
+      - db
+  proxy:
+    build:
+      context: ./proxy
+    volumes: 
+      - static_data:/vol/static
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+
+volumes:
+  static_data:
+  db-data:
